@@ -7,12 +7,18 @@
 
 
 enum AttributeName {
+    case inject
     case injected
+    case available
     
     var applicableAttributes: [String] {
         switch self {
+        case .inject:
+            return ["Inject", "Injection.Inject"]
         case .injected:
-            return ["Injected", "Injection.Inject"]
+            return ["Injected", "Injection.Injected"]
+        case .available:
+            return ["available"]
         }
     }
 }

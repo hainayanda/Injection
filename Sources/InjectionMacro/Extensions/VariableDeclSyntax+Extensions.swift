@@ -20,8 +20,6 @@ extension VariableDeclSyntax {
     func hasAttribute(_ name: AttributeName) -> Bool {
         attributes
             .compactMap { $0.as(AttributeSyntax.self) }
-            .contains { attribute in
-                name.applicableAttributes.contains(attribute.attributeName.trimmedDescription)
-            }
+            .contains { $0.is(name) }
     }
 }

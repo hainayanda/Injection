@@ -27,5 +27,6 @@ final class StateObjectTests: XCTestCase {
         stateObject.injectEnvironment(environment)
         
         XCTAssertEqual(observableObject.mockDependency, environment.mockDependency)
+        XCTAssertEqual(observableObject.child.mockDependency, environment.mockDependency)
     }
 }

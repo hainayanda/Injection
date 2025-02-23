@@ -9,27 +9,15 @@ import SwiftUI
 
 public protocol Injectable {
     func injectEnvironment(_ environment: EnvironmentValues)
+    #if DEBUG
+    @discardableResult
+    func mock<Value>(_ keyPath: WritableKeyPath<EnvironmentValues, Value>, with value: Value) -> Self
+    #endif
 }
 
-// MARK: Injectable + Mocking
+// MARK: Default Implementation
 
 extension Injectable {
-    @discardableResult
-    public func mock<Value>(_ keyPath: WritableKeyPath<EnvironmentValues, Value>, with value: Value) -> Self {
-        Mirror(reflecting: self)
-            .children
-            .compactMap { $0.value as? Injected<Value> }
-            .filter { $0.keyPath == keyPath }
-            .forEach {
-                $0.mock(with: value)
-            }
-        return self
-    }
-}
-
-// MARK: ObservableObject + Extensions
-
-extension ObservableObject where Self: Injectable {
     public func injectEnvironment(_ environment: EnvironmentValues){
         Mirror(reflecting: self)
             .children
@@ -38,26 +26,50 @@ extension ObservableObject where Self: Injectable {
     }
 }
 
+// MARK: Injectable + Mocking
+
+#if DEBUG
+extension Injectable {
+    @discardableResult
+    public func mock<Value>(_ keyPath: WritableKeyPath<EnvironmentValues, Value>, with value: Value) -> Self {
+        Mirror(reflecting: self)
+            .children
+            .compactMap { $0.value as? Injectable }
+            .forEach { $0.mock(keyPath, with: value) }
+        return self
+    }
+}
+#endif
+
 // MARK: State + Extensions
 
-extension State: Injectable where Value: Injectable {
+extension State: Injectable {
     public func injectEnvironment(_ environment: EnvironmentValues) {
-        wrappedValue.injectEnvironment(environment)
+        guard let injectable = wrappedValue as? Injectable else {
+            return
+        }
+        injectable.injectEnvironment(environment)
     }
 }
 
 // MARK: StateObject + Extensions
 
-extension StateObject: Injectable where ObjectType: Injectable {
+extension StateObject: Injectable {
     public func injectEnvironment(_ environment: EnvironmentValues) {
-        wrappedValue.injectEnvironment(environment)
+        guard let injectable = wrappedValue as? Injectable else {
+            return
+        }
+        injectable.injectEnvironment(environment)
     }
 }
 
 // MARK: ObservedObject + Extensions
 
-extension ObservedObject: Injectable where ObjectType: Injectable {
+extension ObservedObject: Injectable {
     public func injectEnvironment(_ environment: EnvironmentValues) {
-        wrappedValue.injectEnvironment(environment)
+        guard let injectable = wrappedValue as? Injectable else {
+            return
+        }
+        injectable.injectEnvironment(environment)
     }
 }

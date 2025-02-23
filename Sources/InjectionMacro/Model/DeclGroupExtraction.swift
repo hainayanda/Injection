@@ -22,15 +22,13 @@ struct DeclGroupExtraction {
     var availableAttributes: [AttributeListSyntax.Element] {
         source.attributes
             .compactMap { $0.as(AttributeSyntax.self) }
-            .filter { attribute in
-                attribute.attributeName.trimmedDescription == "available"
-            }
+            .filter { $0.is(.available) }
             .map { .attribute($0) }
     }
     
     var injectedVariablesName: [TokenSyntax] {
         source.memberBlock.variables
-            .filter { $0.hasAttribute(.injected) }
+            .filter { $0.hasAttribute(.injected) || $0.hasAttribute(.inject) }
             .compactMap { $0.name }
     }
     

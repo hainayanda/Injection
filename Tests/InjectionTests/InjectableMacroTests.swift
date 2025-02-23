@@ -32,6 +32,7 @@ let basicInjectable = #"""
 final class ViewModel {
     @Injected(\.someValue) var someValue: Some
     @Injected(\.someOtherValue) var someOtherValue: SomeOther
+    @Inject var child: Child = Child()
     var someString: String
 }
 """#
@@ -40,6 +41,7 @@ let basicInjectableExpansion = #"""
 final class ViewModel {
     @Injected(\.someValue) var someValue: Some
     @Injected(\.someOtherValue) var someOtherValue: SomeOther
+    @Inject var child: Child = Child()
     var someString: String
 }
 
@@ -47,6 +49,7 @@ extension ViewModel : Injection.Injectable {
     public func injectEnvironment(_ environment: Injection.EnvironmentValues) {
         _someValue.injectEnvironment(environment)
         _someOtherValue.injectEnvironment(environment)
+        _child.injectEnvironment(environment)
     }
 }
 """#
@@ -60,6 +63,9 @@ final class ViewModel {
 
     @ObservationIgnored
     @Injected(\.someOtherValue) var someOtherValue: SomeOther
+    
+    @ObservationIgnored
+    @Inject var child: Child = Child()
 
     var someString: String
 }
@@ -73,6 +79,9 @@ final class ViewModel {
 
     @ObservationIgnored
     @Injected(\.someOtherValue) var someOtherValue: SomeOther
+    
+    @ObservationIgnored
+    @Inject var child: Child = Child()
 
     var someString: String
 }
@@ -81,6 +90,7 @@ extension ViewModel : Injection.Injectable {
     public func injectEnvironment(_ environment: Injection.EnvironmentValues) {
         _someValue.injectEnvironment(environment)
         _someOtherValue.injectEnvironment(environment)
+        _child.injectEnvironment(environment)
     }
 }
 """#

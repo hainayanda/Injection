@@ -24,6 +24,7 @@ final class ObservableObjectTests: XCTestCase {
         observableObject.injectEnvironment(environment)
         
         XCTAssertEqual(observableObject.mockDependency, environment.mockDependency)
+        XCTAssertEqual(observableObject.child.mockDependency, environment.mockDependency)
     }
     
     func test_givenInjected_whenMocked_shouldReturnMockedValue() {
@@ -31,5 +32,6 @@ final class ObservableObjectTests: XCTestCase {
         observableObject.mock(\.mockDependency, with: mockDependency)
         
         XCTAssertEqual(observableObject.mockDependency, mockDependency)
+        XCTAssertEqual(observableObject.child.mockDependency, mockDependency)
     }
 }

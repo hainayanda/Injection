@@ -29,9 +29,15 @@ public final class Injected<Value>: Injectable {
         _wrappedValue = environment[keyPath: keyPath]
     }
     
-    func mock(with value: Value) {
-        _wrappedValue = value
+    #if DEBUG
+    public func mock<MockType>(_ keyPath: WritableKeyPath<EnvironmentValues, MockType>, with value: MockType) -> Self {
+        guard keyPath == self.keyPath, let mockValue = value as? Value else {
+            return self
+        }
+        _wrappedValue = mockValue
+        return self
     }
+    #endif
 }
 
 extension Injected: Equatable where Value: Equatable {
