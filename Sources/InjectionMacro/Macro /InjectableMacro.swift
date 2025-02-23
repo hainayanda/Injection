@@ -17,6 +17,7 @@ struct InjectableMacro { }
 // MARK: @InjectableMacro + ExtensionMacro
 
 extension InjectableMacro: ExtensionMacro {
+    @inlinable
     static func expansion(of node: AttributeSyntax, attachedTo declaration: some DeclGroupSyntax, providingExtensionsOf type: some TypeSyntaxProtocol, conformingTo protocols: [TypeSyntax], in context: some MacroExpansionContext) throws -> [ExtensionDeclSyntax] {
         guard declaration.canBeAttachedWithInjectable else {
             throw InjectionMacroError.attachedToInvalidType

@@ -10,6 +10,7 @@ import SwiftSyntax
 
 extension AttributeSyntax {
     
+    @inlinable
     func `is`(_ name: AttributeName) -> Bool { name.applicableAttributes.contains(attributeName.trimmedDescription)
     }
 }

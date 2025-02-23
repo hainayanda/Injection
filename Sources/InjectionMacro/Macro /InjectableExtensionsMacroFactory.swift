@@ -12,10 +12,12 @@ struct InjectableExtensionsMacroFactory {
     
     let extraction: DeclGroupExtraction
     
+    @inlinable
     init(source: DeclGroupSyntax) {
         extraction = DeclGroupExtraction(source: source)
     }
     
+    @inlinable
     func expandExtensions() throws -> [ExtensionDeclSyntax] {
         return try [
             ExtensionDeclSyntax(

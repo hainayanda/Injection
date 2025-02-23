@@ -34,17 +34,25 @@ public final class Inject<Wrapped>: DynamicProperty {
     }
 }
 
+// MARK: Inject + Projecting
+
 extension Inject where Wrapped: Projecting {
+    @inlinable
     public var projectedValue: Wrapped.ProjectedValue { wrappedValue.projectedValue }
 }
+
+// MARK: Inject + AutoClosurePropertyWrapper
 
 extension Inject: AutoClosurePropertyWrapper where Wrapped: AutoClosurePropertyWrapper {
     public typealias WrappedValue = Wrapped.WrappedValue
     
+    @inlinable
     public convenience init(wrappedValue thunk: @autoclosure @escaping () -> Wrapped.WrappedValue) {
         self.init(wrappedValue: Wrapped(wrappedValue: thunk()))
     }
 }
+
+// MARK: Inject + Injectable
     
 extension Inject: Injectable {
     public func injectEnvironment(_ environment: EnvironmentValues) {
@@ -61,4 +69,31 @@ extension Inject: Injectable {
         return self
     }
     #endif
+}
+
+// MARK: Inject + Equatable
+
+extension Inject: Equatable where Wrapped: Equatable {
+    @inlinable
+    public static func == (lhs: Inject<Wrapped>, rhs: Inject<Wrapped>) -> Bool {
+        lhs.wrappedValue == rhs.wrappedValue
+    }
+}
+
+// MARK: Inject + Hashable
+
+extension Inject: Hashable where Wrapped: Hashable {
+    @inlinable
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(wrappedValue)
+    }
+}
+
+// MARK: Inject + CustomStringConvertible
+
+extension Inject: CustomStringConvertible where Wrapped: CustomStringConvertible {
+    @inlinable
+    public var description: String {
+        wrappedValue.description
+    }
 }

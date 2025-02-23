@@ -13,6 +13,8 @@ public protocol AutoClosurePropertyWrapper {
     init(wrappedValue: @autoclosure @escaping () -> WrappedValue)
 }
 
+// MARK: StateObject + AutoClosurePropertyWrapper
+
 extension StateObject: AutoClosurePropertyWrapper {
     public typealias WrappedValue = ObjectType
 }

@@ -9,11 +9,13 @@ import Foundation
 import SwiftSyntax
 
 extension DeclGroupSyntax {
+    @inlinable
     var canBeAttachedWithInjectable: Bool {
         self.is(ClassDeclSyntax.self)
         || self.is(StructDeclSyntax.self)
     }
     
+    @inlinable
     var typeDeclName: TokenSyntax? {
         if let classDecl = self.as(ClassDeclSyntax.self) {
             return classDecl.name

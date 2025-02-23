@@ -12,19 +12,19 @@ public protocol Projecting {
     var projectedValue: ProjectedValue { get }
 }
 
-// MARK: State + Extensions
+// MARK: State + Projecting
 
 extension State: Projecting {
     public typealias ProjectedValue = Binding<Value>
 }
 
-// MARK: StateObject + Extensions
+// MARK: StateObject + Projecting
 
 extension StateObject: Projecting {
     public typealias ProjectedValue = ObservedObject<ObjectType>.Wrapper
 }
 
-// MARK: ObservedObject + Extensions
+// MARK: ObservedObject + Projecting
 
 extension ObservedObject: Projecting {
     public typealias ProjectedValue = ObservedObject<ObjectType>.Wrapper

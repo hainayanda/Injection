@@ -9,6 +9,7 @@ import Foundation
 import SwiftSyntax
 
 extension TokenSyntax {
+    @inlinable
     func prepend(_ token: TokenSyntax) -> TokenSyntax {
         "\(raw: token.trimmedDescription)\(raw: trimmedDescription)"
     }

@@ -11,7 +11,7 @@ import Combine
 @propertyWrapper
 public final class Injected<Value>: Injectable {
     
-    let keyPath: KeyPath<EnvironmentValues, Value>
+    private let keyPath: KeyPath<EnvironmentValues, Value>
     
     @Published private var _wrappedValue: Value
     public var wrappedValue: Value { _wrappedValue }
@@ -40,19 +40,28 @@ public final class Injected<Value>: Injectable {
     #endif
 }
 
+// MARK: Injected + Equatable
+
 extension Injected: Equatable where Value: Equatable {
+    @inlinable
     public static func == (lhs: Injected<Value>, rhs: Injected<Value>) -> Bool {
         lhs.wrappedValue == rhs.wrappedValue
     }
 }
 
+// MARK: Injected + Hashable
+
 extension Injected: Hashable where Value: Hashable {
+    @inlinable
     public func hash(into hasher: inout Hasher) {
         hasher.combine(wrappedValue)
     }
 }
 
+// MARK: Injected + CustomStringConvertible
+
 extension Injected: CustomStringConvertible where Value: CustomStringConvertible {
+    @inlinable
     public var description: String {
         wrappedValue.description
     }

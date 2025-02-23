@@ -9,6 +9,7 @@ import Foundation
 import SwiftSyntax
 
 extension VariableDeclSyntax {
+    @inlinable
     var name: TokenSyntax? {
         guard let binding =  bindings.first,
               let pattern = binding.pattern.as(IdentifierPatternSyntax.self) else {
@@ -17,6 +18,7 @@ extension VariableDeclSyntax {
         return pattern.identifier
     }
     
+    @inlinable
     func hasAttribute(_ name: AttributeName) -> Bool {
         attributes
             .compactMap { $0.as(AttributeSyntax.self) }

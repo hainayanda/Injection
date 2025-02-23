@@ -9,6 +9,7 @@ import Foundation
 import SwiftSyntax
 
 extension MemberBlockSyntax {
+    @inlinable
     var variables: [VariableDeclSyntax] {
         members
             .compactMap { $0.as(MemberBlockItemSyntax.self) }

@@ -10,6 +10,7 @@ import Foundation
 public enum InjectionMacroError: CustomStringConvertible, Error {
     case attachedToInvalidType
     
+    @inlinable
     public var description: String {
         switch self {
         case .attachedToInvalidType:

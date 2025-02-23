@@ -10,6 +10,7 @@ import SwiftSyntax
 struct DeclGroupExtraction {
     let source: DeclGroupSyntax
     
+    @inlinable
     var name: TokenSyntax {
         get throws {
             guard let name = source.typeDeclName else {
@@ -19,6 +20,7 @@ struct DeclGroupExtraction {
         }
     }
     
+    @inlinable
     var availableAttributes: [AttributeListSyntax.Element] {
         source.attributes
             .compactMap { $0.as(AttributeSyntax.self) }
@@ -26,12 +28,14 @@ struct DeclGroupExtraction {
             .map { .attribute($0) }
     }
     
+    @inlinable
     var injectedVariablesName: [TokenSyntax] {
         source.memberBlock.variables
             .filter { $0.hasAttribute(.injected) || $0.hasAttribute(.inject) }
             .compactMap { $0.name }
     }
     
+    @inlinable
     init(source: DeclGroupSyntax) {
         self.source = source
     }
