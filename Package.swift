@@ -7,10 +7,10 @@ import CompilerPluginSupport
 let package = Package(
     name: "Injection",
     platforms: [
-        .iOS(.v14),
-        .macOS(.v11),
-        .tvOS(.v14),
-        .watchOS(.v7)
+        .iOS(.v15),
+        .macOS(.v12),
+        .tvOS(.v15),
+        .watchOS(.v8)
     ],
     products: [
         .library(
@@ -19,12 +19,16 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.0")
+        .package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.0"),
+        .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", from: "0.58.2")
     ],
     targets: [
         .target(
             name: "Injection",
-            dependencies: ["InjectionMacro"]
+            dependencies: ["InjectionMacro"],
+            plugins: [
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")
+            ]
         ),
         .macro(
             name: "InjectionMacro",

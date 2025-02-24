@@ -19,7 +19,7 @@ public protocol Injectable {
 
 extension Injectable {
     @inlinable
-    public func injectEnvironment(_ environment: EnvironmentValues){
+    public func injectEnvironment(_ environment: EnvironmentValues) {
         Mirror(reflecting: self)
             .children
             .compactMap { $0.value as? Injectable }

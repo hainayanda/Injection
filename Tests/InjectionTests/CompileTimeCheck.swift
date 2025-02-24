@@ -23,6 +23,7 @@ final class MockObservable {
 @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
 extension MockObservable {
     final class Child: Injectable {
+        // periphery:ignore
         @Injected(\.mockDependency) var mockDependency: MockDependency
     }
 }
@@ -39,6 +40,7 @@ extension MockObservableObject {
 }
 
 struct MockDependency: Hashable {
+    // periphery:ignore
     var identifier: UUID = UUID()
 }
 
