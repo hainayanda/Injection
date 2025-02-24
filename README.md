@@ -1,6 +1,6 @@
 # Injection
 
-`Injection` is a lightweight Swift library that allows injecting environment values from a `View` into its properties (e.g., ViewModel, State). It simplifies dependency injection and enhances testability.
+`Injection` is a lightweight Swift library that allows injecting environment values from a `View` into its properties (e.g., ViewModel, State). It simplifies dependency injection, improves testability, and makes SwiftUI development more seamless.
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/8e40c3e960d24b82b8f64224f19bda38)](https://app.codacy.com/gh/hainayanda/Injection/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 ![build](https://github.com/hainayanda/Injection/workflows/podlint/badge.svg)
@@ -15,9 +15,9 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 - Swift 5.9 or higher
 - iOS 15.0 or higher
-- MacOS 12.0 or higher
-- TVOS 15.0 or higher
-- WatchOS 8.0 or higher
+- macOS 12.0 or higher
+- tvOS 15.0 or higher
+- watchOS 8.0 or higher
 - Xcode 15 or higher
 
 ## Installation
@@ -59,13 +59,13 @@ Then, include it in your target:
 ```swift
 struct SomeView: View {
     
-    // Injecting StateObject
+    // Injecting ObservedObject
     @Inject @ObservedObject var observedObject: ViewModel
 
     // Injecting StateObject
     @Inject @StateObject var stateObject: ViewModel
     
-    // for new SwiftUI Observation API
+    // For new SwiftUI Observation API
     @Inject @State var state: ViewModel
     
     // Or just inject any object
@@ -75,19 +75,19 @@ struct SomeView: View {
 }
 ```
 
-The object marked with `@Inject` will need to implement `Injectable` protocol:
+The object marked with `@Inject` will need to implement the `Injectable` protocol:
 
 ```swift
 final class ViewModel: Injectable {
-
-    // accessing injected environment values
+    
+    // Accessing injected environment values
     @Injected(\.isEnabled) var isEnabled
         
     // other code
 }
 ```
 
-If you are using `@Observable` macro and intend to use similar macro, you can use `@Injectable` macro on top of the class/struct declaration:
+If you are using the `@Observable` macro and intend to use a similar macro for injection, you can use the `@Injectable` macro on top of the class/struct declaration:
 
 ```swift
 @Injectable
@@ -100,26 +100,26 @@ final class ViewModel {
 
 ### Injecting Environment from Injectable
 
-The injection is not limited from the View to `Injectable`, `Injectable` can inject it's environment to another `Injectable` too. This is useful for injecting dependencies into the service, repository, or any other properties that need to be initialized with environment values:
+The injection is not limited to the `View`; `Injectable` can inject its environment into another `Injectable` as well. This is useful for injecting dependencies into services, repositories, or any other properties that need environment values:
 
 ```swift
 final class ViewModel: Injectable {
 
     @Inject var repository: ViewRepository
 
-    // accessing injected environment values
+    // Accessing injected environment values
     @Injected(\.isEnabled) var isEnabled
         
     // other code
 }
 ```
 
-And don't forget to make sure the destination is implement Injectable too:
+And don't forget to ensure that the destination also implements `Injectable`:
 
 ```swift
 final class ViewRepository: Injectable {
 
-    // accessing injected environment values
+    // Accessing injected environment values
     @Injected(\.isEnabled) var isEnabled
         
     // other code
@@ -128,12 +128,12 @@ final class ViewRepository: Injectable {
 
 ### Mocking the Dependency for Unit Test
 
-`Injection` also provides a way to mock the dependency for unit testing. All you need to do is to call `mock` method on the `Injectable` object:
+`Injection` also provides a way to mock dependencies for unit testing. All you need to do is call the `mock` method on the `Injectable` object:
 
 ```swift
 let viewModel = ViewModel()
-// now isEnabled will be false for this viewModel and any Injectable marked as @Inject in this viewModel.
-viewModel.mock(\.isEnabled, with: false) 
+// Now isEnabled will be false for this viewModel and any Injectable marked as @Inject within this instance.
+viewModel.mock(\.isEnabled, with: false)
 ```
 
 ## Contributing
