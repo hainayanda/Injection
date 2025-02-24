@@ -3,8 +3,7 @@
 `Injection` is a lightweight Swift library that allows injecting environment values from a `View` into its properties (e.g., ViewModel, State). It simplifies dependency injection, improves testability, and makes SwiftUI development more seamless.
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/8e40c3e960d24b82b8f64224f19bda38)](https://app.codacy.com/gh/hainayanda/Injection/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
-![build](https://github.com/hainayanda/Injection/workflows/podlint/badge.svg)
-![test](https://github.com/hainayanda/Injection/workflows/test/badge.svg)
+[![Unit Test](https://github.com/hainayanda/Injection/actions/workflows/test.yml/badge.svg)](https://github.com/hainayanda/Injection/actions/workflows/test.yml)
 [![SwiftPM Compatible](https://img.shields.io/badge/SwiftPM-Compatible-brightgreen)](https://swift.org/package-manager/)
 
 ## Example
