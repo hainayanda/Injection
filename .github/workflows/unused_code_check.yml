@@ -3,9 +3,9 @@ name: Unused Code Check
 on:
   workflow_dispatch:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
 jobs:
   unusedcodecheck:
@@ -21,4 +21,4 @@ jobs:
     - name: Run Periphery on MacOS
       run: |
         brew install periphery
-        periphery scan
+        periphery scan --strict
