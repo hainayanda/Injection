@@ -21,4 +21,4 @@ jobs:
     - name: Run Periphery on MacOS
       run: |
         brew install periphery
-        periphery scan
+        periphery scan --strict
