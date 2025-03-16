@@ -1,4 +1,4 @@
-# Injection
+# Injection (EXPERIMENTAL)
 
 `Injection` is a lightweight Swift library that allows injecting environment values from a `View` into its properties (e.g., ViewModel, State). It simplifies dependency injection, improves testability, and makes SwiftUI development more seamless.
 
